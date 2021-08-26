@@ -18,7 +18,7 @@ foreach (KERNEL ${CM_KERNEL})
     add_custom_command(
         OUTPUT
             ${BIN}
-        COMMAND
+        COMMAND ${CMAKE_COMMAND} -E env IGC_DumpToCustomDir=${CMAKE_CURRENT_SOURCE_DIR}/${KERNEL_TARGET}
             cmoc -Qxcm_jit_option="-noverifyCISA" -Qxcm_jit_option=-noLocalSplit
             -Qxcm_jit_option=-enableBCR -Qxcm_jit_option=-SWSBDepReduction
             -Qxcm_jit_option=-ratrace -Qxcm_print_asm_count
@@ -56,7 +56,7 @@ foreach (KERNEL ${OCL_KERNEL})
     add_custom_command(
         OUTPUT
             ${BIN}
-        COMMAND
+        COMMAND ${CMAKE_COMMAND} -E env IGC_DumpToCustomDir=${CMAKE_CURRENT_SOURCE_DIR}/${KERNEL_TARGET}
             ocloc -file ${KERNEL} -device pvc
             -internal_options "-allow-zebin -dumpvisa -dump-isa-binary"
             -output_no_suffix

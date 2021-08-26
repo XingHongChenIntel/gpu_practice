@@ -109,8 +109,16 @@ def get_name(command):
 
 def execute_command(command):
     name = get_name(command)
-    command = "./clpeak" + " --presilicon " + command
+    command = "../cmake-build-debug/gpu_practice " + command
     os.environ["AUBDumpCaptureFileName"] = name + ".aub"
+    os.environ["SetCommandStreamReceiver"] = "4"
+    os.environ["AubDumpAddMmioRegistersList"] = "0x14800; 0xFFFF0003; 0x14804; 0x00000000; 0xE538;0x00000001; 0xE534;0x0000000"
+    os.environ["ProductFamilyOverride"] = "pvc"
+    os.environ["ForceDeviceId"] = "0xBD5"
+    os.environ["HAS_STOP_VM_ON_TCP_ERROR"] = "1"
+    os.environ["RebuildPrecompiledKernels"] = "1"
+    os.environ["OverrideRevision"] = "3"
+
     fulsim_path = os.getenv("CSDK_SIM")
     print(fulsim_path)
     print(os.getenv("AUBDumpCaptureFileName"))
@@ -125,9 +133,7 @@ def execute_command(command):
 
 
 if __name__ == "__main__":
-    workloads = ["--global-bandwidth"] 
-                # "--compute-dp", "--compute-integer", "--compute-intfast", "--compute-xmx --int8",
-                # "--compute-xmx --bf16", "--transfer-bandwidth", "--global-bandwidth"]
+    workloads = ["l0_host_test", "l0_max_value"]
     PROCESS = 10
     with mp.Pool(PROCESS) as pool:
         results = [pool.apply_async(execute_command, (work,)) for work in workloads]
@@ -135,7 +141,7 @@ if __name__ == "__main__":
             print('\t', r.get())
         pool.close()
         pool.join()
-    
+
     kaolin_commands = []
     for work in workloads:
         trace_path = str(pathlib.Path(__file__).parent / get_name(work))
