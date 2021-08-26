@@ -5,15 +5,17 @@
 #include "test_case.h"
 #include "utility/l0_helper.h"
 
-class L0Test : public TestCase {
+#define CLASSNAME L0Test
+
+class CLASSNAME : public TestCase {
  public:
   std::string get_test_name();
   void run();
 };
 
-std::string L0Test::get_test_name() { return "l0_host_test"; }
+std::string CLASSNAME::get_test_name() { return "l0_host_test"; }
 
-void L0Test::run() {
+void CLASSNAME::run() {
   // Setup
   Timer timer;
   // Create kernel
@@ -74,4 +76,4 @@ void L0Test::run() {
   L0_SAFE_CALL(zeCommandQueueDestroy(commandQueue));
 }
 
-static const RegisterTestCase<L0Test> l0_test;
+static const RegisterTestCase<CLASSNAME> l0_test;

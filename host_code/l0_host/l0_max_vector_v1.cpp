@@ -11,7 +11,7 @@
 #include "validate.h"
 #include "utility/l0_helper.h"
 
-#define CLASSNAME L0MaxValue
+#define CLASSNAME L0MaxValueV1
 
 class CLASSNAME : public TestCase {
  public:
@@ -19,7 +19,7 @@ class CLASSNAME : public TestCase {
   void run();
 };
 
-std::string CLASSNAME::get_test_name() { return "l0_max_value"; }
+std::string CLASSNAME::get_test_name() { return "l0_max_value_v1"; }
 
 static void cpu_compute(float *input_buf, float *output_buf, uint32_t row, uint32_t column) {
   for (uint32_t i = 0; i < row; i++) {
@@ -37,7 +37,7 @@ void CLASSNAME::run() {
   // Setup
   Timer timer;
   // Create kernel
-  auto spirvModule = read_binary_file<uint8_t>("../kernel/max_kernel_L0.bin");
+  auto spirvModule = read_binary_file<uint8_t>("../kernel/max_kernel_v1_L0.bin");
   if (spirvModule.size() == 0) {
     std::cerr << "kernel binary file is empty" << std::endl;
   }
@@ -89,7 +89,7 @@ void CLASSNAME::run() {
   kernelDesc.pKernelName = "empty";
   L0_SAFE_CALL(zeKernelCreate(module, &kernelDesc, &kernel));
   // Configure kernel
-  L0_SAFE_CALL(zeKernelSetGroupSize(kernel, 1u, 1u, 1u));
+  L0_SAFE_CALL(zeKernelSetGroupSize(kernel, 8u, 1u, 1u));
   L0_SAFE_CALL(zeKernelSetArgumentValue(kernel, 0, sizeof(v0), &v0));
   L0_SAFE_CALL(zeKernelSetArgumentValue(kernel, 1, sizeof(v1), &v1));
 
