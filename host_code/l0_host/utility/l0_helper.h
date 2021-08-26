@@ -6,12 +6,14 @@
 #define GPU_PRACTICE_HOST_CODE_L0_HOST_L0_HELPER_H_
 
 #include <assert.h>
+#include <unistd.h>
 #include <ze_api.h>
 
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include <tuple>
 #include <vector>
@@ -21,6 +23,7 @@
     auto status = (call);                                                       \
     if (status != 0) {                                                          \
       fprintf(stderr, "%s:%d: L0 error %d\n", __FILE__, __LINE__, (int)status); \
+      std::cerr.flush();                                                        \
       exit(1);                                                                  \
     }                                                                           \
   }
@@ -52,6 +55,16 @@ std::vector<T> read_binary_file(const char *fname, size_t num = 0) {
     ifs.read(reinterpret_cast<char *>(vec.data()), vec.size() * sizeof(T));
   }
   return vec;
+}
+
+inline std::string readfile(const std::string &filename) {
+  std::ifstream file(filename, std::ios::in);
+  if (!file.good()) {
+    std::cerr << "open file filed! file :" << filename << std::endl;
+  }
+  std::stringstream temp;
+  temp << file.rdbuf();
+  return temp.str();
 }
 
 inline auto findDevice() {
@@ -123,10 +136,10 @@ inline void print_device_info(ze_driver_handle_t hDriver, ze_device_handle_t hDe
   L0_SAFE_CALL(zeDeviceGetProperties(hDevice, &device))
   std::cout << "the l0 device name is " << device.name << std::endl;
 
-  ze_device_module_properties_t module_properties;
-  L0_SAFE_CALL(zeDeviceGetModuleProperties(hDevice, &module_properties))
-  std::cout << "device support f16 :" << module_properties.fp16flags << "\n"
-            << "device support f64 :" << module_properties.fp64flags << std::endl;
+//  ze_device_module_properties_t module_properties;
+//  L0_SAFE_CALL(zeDeviceGetModuleProperties(hDevice, &module_properties))
+//  std::cout << "device support f16 :" << module_properties.fp16flags << "\n"
+//            << "device support f64 :" << module_properties.fp64flags << std::endl;
 
   ze_device_memory_properties_t device_memory_properties;
   count = 0;

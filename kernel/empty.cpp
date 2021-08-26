@@ -3,6 +3,7 @@
 //
 
 #include <cm/cm.h>
+#define MUN 123
 extern "C" _GENX_MAIN_ void empty(){
 
 }

@@ -28,6 +28,11 @@ class TestMap {
     test_map[name] = std::move(test_case);
   }
 
+  void print_All(){
+    for (auto &i : test_map){
+      std::cout << i.second->get_test_name() << std::endl;
+    }
+  }
   struct LexicographicalLess {
     bool operator()(const std::string &left, const std::string &right) const { return left < right; }
   };

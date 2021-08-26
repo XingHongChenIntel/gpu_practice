@@ -1,0 +1,43 @@
+# this yaml file is the configure for relative tools.
+
+pyl0:
+    name: "pyl0"
+    version: "603"
+    address: "https://gfx-assets.fm.intel.com/artifactory/gfx-cm-assets-igk/build/pyl0/"
+
+sdk:
+    name: "sdk"
+    version: "2021_WW30"
+    platform: "pvc"
+    address: "https://gfx-assets.fm.intel.com/artifactory/gfx-compute-sdk-fm/releases/internal/"
+
+sim:
+    name: "fulsim"
+    version: "20210319_v14.3"
+    address: "https://gfx-assets.igk.intel.com/artifactory/gfx-cobalt-dev-assets-fm/KaolinInstrumentedFulsim/Linux/PVC/"
+
+kaolin:
+    name: "kaolin"
+    version: "1002907"
+    address: "https://gfx-assets.igk.intel.com/artifactory/gfx-cobalt-dev-assets-fm/Kaolin/Release/"
+
+genisai:
+    version: ""
+    address: ""
+
+gits:
+    name: "gits"
+    version: "GITS_02.00.06.875"
+    runtime: "l0"
+    turn_on: "false"
+    address: "https://validation.igk.intel.com/builds/gits/"
+
+marcus:
+    name: "marcus"
+    version: ""
+    address: "https://github.com/intel-innersource/drivers.gpu.validation.marcus.git"
+
+avi:
+    name: "avi"
+    version: ""
+    address: "https://github.com/intel-innersource/drivers.gpu.validation.avi.git"

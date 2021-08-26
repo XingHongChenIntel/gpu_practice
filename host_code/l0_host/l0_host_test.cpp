@@ -17,9 +17,10 @@ void L0Test::run() {
   // Setup
   Timer timer;
   // Create kernel
-  auto spirvModule = read_binary_file<uint8_t>("api_overhead_benchmark_empty_kernel.spv");
+  auto spirvModule = read_binary_file<uint8_t>("../kernel/empty_L0.bin");
   if (spirvModule.size() == 0) {
     std::cerr << "kernel binary file is empty" << std::endl;
+    return;
   }
 
   auto [hDriver, hDevice, hContext] = findDevice();
@@ -39,7 +40,7 @@ void L0Test::run() {
   // create module
   ze_module_handle_t module;
   ze_module_desc_t moduleDesc{ZE_STRUCTURE_TYPE_MODULE_DESC};
-  moduleDesc.format = ZE_MODULE_FORMAT_IL_SPIRV;
+  moduleDesc.format = ZE_MODULE_FORMAT_NATIVE;
   moduleDesc.pInputModule = reinterpret_cast<const uint8_t *>(spirvModule.data());
   moduleDesc.inputSize = spirvModule.size();
   L0_SAFE_CALL(zeModuleCreate(hContext, hDevice, &moduleDesc, &module, nullptr));

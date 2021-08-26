@@ -31,10 +31,11 @@ static void cpu_compute(float *input_buf, float *output_buf, uint32_t row, uint3
 }
 
 void L0MaxValue::run() {
+  std::cout << get_test_name() << "is running ..." << std::endl;
   // Setup
   Timer timer;
   // Create kernel
-  auto spirvModule = read_binary_file<uint8_t>("api_overhead_benchmark_empty_kernel.spv");
+  auto spirvModule = read_binary_file<uint8_t>("../kernel/max_kernel_L0.bin");
   if (spirvModule.size() == 0) {
     std::cerr << "kernel binary file is empty" << std::endl;
   }
@@ -56,7 +57,7 @@ void L0MaxValue::run() {
   // create module
   ze_module_handle_t module;
   ze_module_desc_t moduleDesc{ZE_STRUCTURE_TYPE_MODULE_DESC};
-  moduleDesc.format = ZE_MODULE_FORMAT_IL_SPIRV;
+  moduleDesc.format = ZE_MODULE_FORMAT_NATIVE;
   moduleDesc.pInputModule = reinterpret_cast<const uint8_t *>(spirvModule.data());
   moduleDesc.inputSize = spirvModule.size();
   L0_SAFE_CALL(zeModuleCreate(hContext, hDevice, &moduleDesc, &module, nullptr));

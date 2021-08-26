@@ -44,5 +44,7 @@ add_executable(${TARGET_NAME} main.cpp)
 include_directories(framework)
 target_include_directories(${TARGET_NAME} PUBLIC ${LevelZero_INCLUDE_DIRS} ${OpenCL_INCLUDE_DIRS})
 target_link_libraries(${TARGET_NAME} PUBLIC ${LevelZero_LIBRARIES} ${OpenCL_LIBRARIES})
+add_subdirectory(kernel)
 add_subdirectory(host_code)
+
 

@@ -20,6 +20,7 @@ class RegisterTestCase {
       std::cerr << "[error] " << name << " case is duplicate in name!" << std::endl;
     } else {
       my_map.set_case(name, test_case);
+      std::cout << "[info] " << name << "had register successfully" << std::endl;
     }
   }
 };
