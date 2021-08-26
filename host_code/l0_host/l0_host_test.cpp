@@ -1,9 +1,9 @@
 //
 // Created by cxh on 2021/8/5.
 //
-#include "l0_helper.h"
 #include "register_case.h"
 #include "test_case.h"
+#include "utility/l0_helper.h"
 
 class L0Test : public TestCase {
  public:

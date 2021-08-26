@@ -11,10 +11,10 @@
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <tuple>
 #include <vector>
-#include <fstream>
 
 #define L0_SAFE_CALL(call)                                                      \
   {                                                                             \
@@ -102,7 +102,7 @@ inline auto findDevice() {
   return std::make_tuple(hDriver, hDevice, hContext);
 }
 
-void print_device_info(ze_driver_handle_t hDriver, ze_device_handle_t hDevice, ze_context_handle_t hContext) {
+inline void print_device_info(ze_driver_handle_t hDriver, ze_device_handle_t hDevice, ze_context_handle_t hContext) {
   ze_driver_properties_t driver_properties;
   L0_SAFE_CALL(zeDriverGetProperties(hDriver, &driver_properties))
   std::cout << "driver id : " << driver_properties.uuid.id << std::endl;
@@ -157,7 +157,5 @@ void print_device_info(ze_driver_handle_t hDriver, ze_device_handle_t hDevice, z
             << "the num thread per eu is " << device.numThreadsPerEU << "\n"
             << std::endl;
 }
-
-
 
 #endif  // GPU_PRACTICE_HOST_CODE_L0_HOST_L0_HELPER_H_

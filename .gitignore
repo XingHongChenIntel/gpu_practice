@@ -31,4 +31,6 @@
 *.out
 *.app
 
+# clion
 cmake-build-debug
+.idea
